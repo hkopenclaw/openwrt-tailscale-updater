@@ -204,7 +204,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: version-file
-          path: .
+          path: ./version.txt
       - name: Moving files
         run: |
           for dir in "${{ env.FILE_NAME }}-"*; do
