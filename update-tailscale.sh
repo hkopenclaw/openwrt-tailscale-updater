@@ -5,8 +5,8 @@
 # Author: Admon
 SCRIPT_VERSION="2026.05.06.01"
 SCRIPT_NAME="update-tailscale.sh"
-UPDATE_URL="https://raw.githubusercontent.com/hkopenclaw/glinet-tailscale-updater/main/update-tailscale.sh"
-TAILSCALE_TINY_URL="https://github.com/hkopenclaw/glinet-tailscale-updater/releases/latest/download/"
+UPDATE_URL="https://raw.githubusercontent.com/hkopenclaw/openwrt-tailscale-updater/main/update-tailscale.sh"
+TAILSCALE_TINY_URL="https://github.com/hkopenclaw/openwrt-tailscale-updater/releases/latest/download/"
 
 # ==============================================================================
 # Variables & Constants
@@ -315,7 +315,7 @@ collect_user_preferences() {
 
 choose_release_label() {
     log "INFO" "Fetching available release labels..."
-    available_labels=$(wget -qO- "https://api.github.com/repos/hkopenclaw/glinet-tailscale-updater/releases" | grep '"tag_name"' | sed 's/.*": "\([^"]*\)".*/\1/')
+    available_labels=$(wget -qO- "https://api.github.com/repos/hkopenclaw/openwrt-tailscale-updater/releases" | grep '"tag_name"' | sed 's/.*": "\([^"]*\)".*/\1/')
     
     if [ -z "$available_labels" ]; then
         log "ERROR" "Could not retrieve release labels. Please check your internet connection."
@@ -340,7 +340,7 @@ choose_release_label() {
         exit 1
     else
         log "INFO" "You selected release label: $selected_label"
-        TAILSCALE_TINY_URL="https://github.com/hkopenclaw/glinet-tailscale-updater/releases/download/$selected_label"
+        TAILSCALE_TINY_URL="https://github.com/hkopenclaw/openwrt-tailscale-updater/releases/download/$selected_label"
         log "WARNING" "Downgrading is not officially supported by Tailscale!"
         log "WARNING" "It could lead to issues and unexpected behavior!"
         log "WARNING" "Do you want to continue? (y/N)"
@@ -359,7 +359,7 @@ invoke_update() {
     log "INFO" "Checking for script updates"
     local update_url="$UPDATE_URL"
     if [ "$TESTING" -eq 1 ]; then
-        update_url="https://raw.githubusercontent.com/hkopenclaw/glinet-tailscale-updater/testing/update-tailscale.sh"
+        update_url="https://raw.githubusercontent.com/hkopenclaw/openwrt-tailscale-updater/testing/update-tailscale.sh"
         log "INFO" "Testing mode: Using testing branch for script updates"
     fi
     SCRIPT_VERSION_NEW=$(wget -qO- "$update_url" | grep -o 'SCRIPT_VERSION="[0-9]\{4\}\.[0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}"' | cut -d '"' -f 2 || echo "Failed to retrieve scriptversion")
@@ -505,8 +505,8 @@ main() {
     # Set URLs based on --testing flag
     if [ "$TESTING" -eq 1 ]; then
         log "INFO" "Testing mode enabled: Using prerelease versions"
-        TAILSCALE_TINY_URL="https://github.com/hkopenclaw/glinet-tailscale-updater/releases/download/prerelease/"
-        UPDATE_URL="https://raw.githubusercontent.com/hkopenclaw/glinet-tailscale-updater/testing/update-tailscale.sh"
+        TAILSCALE_TINY_URL="https://github.com/hkopenclaw/openwrt-tailscale-updater/releases/download/prerelease/"
+        UPDATE_URL="https://raw.githubusercontent.com/hkopenclaw/openwrt-tailscale-updater/testing/update-tailscale.sh"
     fi
 
     # Check if the script is up to date
