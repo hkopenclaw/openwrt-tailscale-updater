@@ -134,12 +134,6 @@ preflight_check() {
     else
         log "SUCCESS" "Available space: $AVAILABLE_SPACE MB"
     fi
-    # Check if xz is present
-    if ! command -v xz >/dev/null; then
-        log "WARNING" "xz is not installed. We can install it for you later."
-    else
-        log "SUCCESS" "xz is installed."
-    fi
     # Check if wget is present
     if ! command -v wget >/dev/null; then
         log "ERROR" "wget is not installed. Exiting"
