@@ -17,7 +17,7 @@ env:
   SOFTWARE_NAME: "Tailscale"
   FILE_NAME: "tailscaled"
   REPO: "tailscale/tailscale"
-  REPO_SMALL: "hkopenclaw/glinet-tailscale-updater"
+  REPO_SMALL: "hkopenclaw/openwrt-tailscale-updater"
   GIT_AUTHOR_NAME: "hkopenclaw"
 jobs:
   check-versions:
@@ -95,7 +95,7 @@ jobs:
         with:
           repository: ${{ env.REPO }}
           ref: ${{ env.TAG }}
-      - name: Checkout glinet-tailscale-updater (patches)
+      - name: Checkout openwrt-tailscale-updater (patches)
         uses: actions/checkout@v4
         with:
           path: repo
