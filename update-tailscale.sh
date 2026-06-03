@@ -3,7 +3,7 @@
 # shellcheck disable=SC3036
 # Description: This script updates tailscale on OpenWrt routers
 # Author: Admon
-SCRIPT_VERSION="2026.05.06.01"
+SCRIPT_VERSION="2026.05.20.01"
 SCRIPT_NAME="update-tailscale.sh"
 UPDATE_URL="https://raw.githubusercontent.com/hkopenclaw/openwrt-tailscale-updater/main/update-tailscale.sh"
 TAILSCALE_TINY_URL="https://github.com/hkopenclaw/openwrt-tailscale-updater/releases/latest/download/"
@@ -19,7 +19,6 @@ FORCE_UPGRADE=0
 RESTORE=0
 SELECT_RELEASE=0
 SHOW_LOG=0
-ASCII_MODE=0
 TESTING=0
 
 # Constants - Colors
@@ -44,34 +43,18 @@ log() {
     case "$level" in
     ERROR)
         color=$RED
-        if [ "$ASCII_MODE" -eq 1 ]; then
-            symbol="[X] "
-        else
-            symbol="❌ "
-        fi
+        symbol="[X] "
         ;;
     WARNING)
         color=$YELLOW
-        if [ "$ASCII_MODE" -eq 1 ]; then
-            symbol="[!] "
-        else
-            symbol="⚠️  "
-        fi
+        symbol="[!] "
         ;;
     SUCCESS)
         color=$GREEN
-        if [ "$ASCII_MODE" -eq 1 ]; then
-            symbol="[OK] "
-        else
-            symbol="✅ "
-        fi
+        symbol="[OK] "
         ;;
     INFO)
-        if [ "$ASCII_MODE" -eq 1 ]; then
-            symbol="[->] "
-        else
-            symbol="ℹ️  "
-        fi
+        symbol="[->] "
         ;;
     esac
 
@@ -262,7 +245,6 @@ invoke_help() {
     printf "  \033[93m--select-release\033[0m     \033[97mSelect a specific release version\033[0m\n"
     printf "  \033[93m--testing\033[0m            \033[97mUse testing/prerelease versions from testing branch\033[0m\n"
     printf "  \033[93m--log\033[0m                \033[97mShow timestamps in log messages\033[0m\n"
-    printf "  \033[93m--ascii\033[0m              \033[97mUse ASCII characters instead of emojis\033[0m\n"
     printf "  \033[93m--help\033[0m               \033[97mShow this help\033[0m\n"
 }
 
@@ -471,9 +453,6 @@ parse_arguments() {
             ;;
         --log)
             SHOW_LOG=1
-            ;;
-        --ascii)
-            ASCII_MODE=1
             ;;
         --force-upgrade)
             FORCE_UPGRADE=1
